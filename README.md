@@ -1,8 +1,6 @@
-# Hello World
+# Money Transfer
 
-This is the default project that is scaffolded out when you run `npx @temporalio/create@latest ./myfolder`.
-
-The [Hello World Tutorial](https://docs.temporal.io/docs/typescript/hello-world/) walks through the code in this sample.
+This is an adaption of the moneytransfer example from the Temporal Java SDK
 
 ### Running this sample
 
@@ -10,9 +8,5 @@ The [Hello World Tutorial](https://docs.temporal.io/docs/typescript/hello-world/
 1. `npm install` to install dependencies.
 1. `npm run start.watch` to start the Worker.
 1. In another shell, `npm run workflow` to run the Workflow Client.
+1. In another shell, `npm run signal` to send a signal to confirm the money transfer. 
 
-The Workflow should return:
-
-```bash
-Hello, Temporal!
-```
