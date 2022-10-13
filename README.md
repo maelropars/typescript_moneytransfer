@@ -15,6 +15,11 @@ In another shell, `npm run signal` to send a signal to confirm the money transfe
 DEMO SCENARIO
 
 1. Simple transaction
-1. Introduce an error in activity ; patch code
+1. Introduce an error in activity 
+    - Uncomment the error in the deposit activity, show the error handling in the UI
+    - Patch code, show that the workflow is resumed and the transfer is executed
 1. Introduce business logic (if > 1000, reject)
+    - You can change the amount in client.ts `args: ["myaccount", "friendaccount",  nanoid(), 2500 ]`
 1. Introduce long running business logic with signal, Signal (if > 1000, wait 30s for approval)
+    - Execute without signal, show timeout with automated rejection
+    - Execute with signal using clientSignal.ts with the correct workflowId, show that the transfer is executed

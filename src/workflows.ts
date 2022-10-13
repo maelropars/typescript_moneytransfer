@@ -19,7 +19,8 @@ const { withdraw } = wf.proxyActivities<typeof activities>({
   startToCloseTimeout: '10 seconds',
 });
 
-
+// THIS IS HOW THE FINAL WORKFLOW LOOKS
+// When the ammount is > 1000, it requires an approval, wait 30s for someone to confirm the transfer
 export async function transfer2(fromAccountId: string, toAccountId: string, referenceId: string, amountCents: number): Promise<void> {
   let isConfirmed = true;
   wf.setHandler(confirm, (response) => void (isConfirmed = response));
@@ -36,23 +37,18 @@ export async function transfer2(fromAccountId: string, toAccountId: string, refe
   if (isConfirmed){
     await withdraw(fromAccountId, referenceId, amountCents);
     await deposit(toAccountId, referenceId, amountCents);
-} else {
-  console.log('WORKFLOW : Rejecting transfer');
-}
-
-}
-export async function transfer(fromAccountId: string, toAccountId: string, referenceId: string, amountCents: number): Promise<void> {
-  let isConfirmed = true;
-  
-  if (amountCents > 1000){
-    isConfirmed = false;
-  }
-  if (isConfirmed){
-    await withdraw(fromAccountId, referenceId, amountCents);
-    await deposit(toAccountId, referenceId, amountCents);
   } else {
     console.log('WORKFLOW : Rejecting transfer');
   }
+}
+
+// INITIAL WORKFLOW 
+export async function transfer(fromAccountId: string, toAccountId: string, referenceId: string, amountCents: number): Promise<void> {
+
+  
+    await withdraw(fromAccountId, referenceId, amountCents);
+    await deposit(toAccountId, referenceId, amountCents);
+
 } 
 
 // @@@SNIPEND

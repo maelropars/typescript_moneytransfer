@@ -11,7 +11,7 @@ async function run() {
   });
 
   const handle = await client.start(transfer, {
-    args: ["myaccount", "friendaccount",  nanoid(), 250 ],
+    args: ["myaccount", "friendaccount",  nanoid(), 2500 ],
     taskQueue: 'moneytransfer-typescript',
     workflowId: 'workflow-' + nanoid(),
   });
