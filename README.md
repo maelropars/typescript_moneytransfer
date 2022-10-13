@@ -12,10 +12,9 @@ This is an adaption of the moneytransfer example from the Temporal Java SDK
 `let workflowId = "workflow-1KlWy3Wtdey990GZt5jwg";`
 In another shell, `npm run signal` to send a signal to confirm the money transfer. 
 
-DEMO
+DEMO SCENARIO
 
-1/ Simple transaction
-2/ Introduce an error ; patch
-3/ Introduce logic (if > 1000, reject)
-4/ Introduce Signal (if > 1000, wait 30s for approval)
-5/ Schedule every day
+1. Simple transaction
+1. Introduce an error in activity ; patch code
+1. Introduce business logic (if > 1000, reject)
+1. Introduce long running business logic with signal, Signal (if > 1000, wait 30s for approval)
