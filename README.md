@@ -10,3 +10,10 @@ This is an adaption of the moneytransfer example from the Temporal Java SDK
 1. In another shell, `npm run workflow` to run the Workflow Client.
 1. In another shell, `npm run signal` to send a signal to confirm the money transfer. 
 
+DEMO
+
+1/ Simple transaction
+2/ Introduce an error ; patch
+3/ Introduce logic (if > 1000, reject)
+4/ Introduce Signal (if > 1000, wait 30s for approval)
+5/ Schedule every day

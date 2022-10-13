@@ -11,11 +11,11 @@ async function run() {
   const client = new WorkflowClient(connection.service, {
   });
 
-  let workflowId = "workflow-uBY2oaqpAoyyHaoF5raif";
+  let workflowId = "workflow-1KlWy3Wtdey990GZt5jwg";
 
   const handle = await client.getHandle(workflowId);
   handle.signal(confirm, true);
-  console.log(`Confirmed transaction ${workflowId}`);
+  console.log(`CLIENT : Confirmed transaction ${workflowId}`);
 
 }
 

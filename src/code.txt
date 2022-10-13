@@ -1,0 +1,42 @@
+
+// TRANSACTION
+
+await withdraw(fromAccountId, referenceId, amountCents);
+await deposit(toAccountId, referenceId, amountCents);  
+
+// AJOUT DELAI
+await wf.sleep('15 s'); 
+
+// AJOUT CONFIRMATION
+let isConfirmed = true
+  
+  if ( amountCents > 1000) {
+    isConfirmed = false;
+    
+  } else {
+      console.log('WORKFLOW : reject transaction');  
+  }
+
+  if (isConfirmed) {
+
+
+// AJOUT SIGNAL
+wf.setHandler(confirm, (response) => void (isConfirmed = response));
+
+  if (amountCents > 1000) {
+    isConfirmed = false;
+    if (await wf.condition(() => isConfirmed, '30 seconds')) {
+      console.log('WORKFLOW : Confirmed');
+    } else {
+      console.log('WORKFLOW : Timeout, cancel transaction');  
+    }
+  }
+    
+  if (isConfirmed){
+  await withdraw(fromAccountId, referenceId, amountCents);
+  await deposit(toAccountId, referenceId, amountCents);  
+} else {
+  console.log('WORKFLOW : Rejecting transfer');
+}
+
+
