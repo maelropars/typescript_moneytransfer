@@ -1,6 +1,6 @@
 # Money Transfer
 
-This is an adaption of the moneytransfer example from the Temporal Java SDK
+This is a typescript adaption of the moneytransfer example from the Temporal Java SDK
 
 ### Running this sample
 
