@@ -4,6 +4,7 @@ import * as activities from './activities';
 
 async function run() {
   const worker = await Worker.create({
+    namespace: 'default',
     workflowsPath: require.resolve('./workflows'),
     activities,
     taskQueue: 'moneytransfer-typescript',

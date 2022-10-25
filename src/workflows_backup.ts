@@ -29,7 +29,6 @@ export async function transfer(fromAccountId: string, toAccountId: string, refer
   console.log(`WORKFLOW  : Request transfer from ${fromAccountId} to ${toAccountId} of ${amountCents} cents requested. ReferenceId=${referenceId}`);
   if (amountCents > 1000){
     isConfirmed = false;
-    wf.upsertSearchAttributes({ CustomStringField: ["NEED APPROVAL"]});
     if (await wf.condition(() => isConfirmed, '30 seconds')) {
       console.log('WORKFLOW : Confirmed');
     } else {
@@ -39,9 +38,8 @@ export async function transfer(fromAccountId: string, toAccountId: string, refer
   if (isConfirmed){
     await withdraw(fromAccountId, referenceId, amountCents);
     await deposit(toAccountId, referenceId, amountCents);
-    wf.upsertSearchAttributes({ CustomStringField: ["SUCCESS"]});
   } else {
-    wf.upsertSearchAttributes({ CustomStringField: ["REJECTED"]});
+    console.log('WORKFLOW : Rejecting transfer');
   }
 }
 
@@ -50,7 +48,7 @@ export async function transfer2(fromAccountId: string, toAccountId: string, refe
 
     await withdraw(fromAccountId, referenceId, amountCents);
     await deposit(toAccountId, referenceId, amountCents);
-    wf.upsertSearchAttributes({ CustomStringField: ["SUCCESS"]});
+
 } 
 
 // @@@SNIPEND
