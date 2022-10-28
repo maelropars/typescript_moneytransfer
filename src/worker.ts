@@ -12,7 +12,7 @@ async function run() {
   console.log('connecting to');
   console.log(address);
 
-  if (process.env['MTLS']){
+  if (process.env['MTLS'] || process.env['MTLS'] == 'false'){
     console.log('MTLS is set, connecting to cloud with client certificates');
     if (process.env['TEMPORAL_TLS_CERT'] && process.env['TEMPORAL_TLS_KEY']) {
       console.log('loading certs');

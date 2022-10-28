@@ -18,7 +18,7 @@ export async function listMoneyTransfers(approveOnly: boolean):Promise<PaymentDe
   console.log('connecting to');
   console.log(address);
 
-  if (process.env['MTLS']){
+  if (process.env['MTLS'] || process.env['MTLS'] == 'false'){
     console.log('MTLS is set, connecting to cloud with client certificates');
     if (process.env['TEMPORAL_TLS_CERT'] && process.env['TEMPORAL_TLS_KEY']) {
       const cert = await fs.readFile(process.env['TEMPORAL_TLS_CERT']);
