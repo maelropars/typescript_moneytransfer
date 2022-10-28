@@ -15,6 +15,8 @@ async function run() {
   if (process.env['MTLS']){
     console.log('MTLS is set, connecting to cloud with client certificates');
     if (process.env['TEMPORAL_TLS_CERT'] && process.env['TEMPORAL_TLS_KEY']) {
+      console.log('loading certs');
+    
       const cert = await fs.readFile(process.env['TEMPORAL_TLS_CERT']);
       const key = await fs.readFile(process.env['TEMPORAL_TLS_KEY']);
 
