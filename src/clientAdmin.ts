@@ -1,6 +1,7 @@
 // @@@SNIPSTART typescript-hello-client
 import { Connection } from '@temporalio/client';
 import { SearchAttributePayloadConverter } from '@temporalio/common';
+import fs from "fs-extra";
 
 export interface PaymentDesc {
   paymentId?: string;
@@ -11,8 +12,40 @@ export interface PaymentDesc {
 }
 
 export async function listMoneyTransfers(approveOnly: boolean):Promise<PaymentDesc[]> {
+  let connectionOptions = {};
+  let namespaceName = process.env['TEMPORAL_NAMESPACE'] || 'default';
+  let address = process.env['TEMPORAL_HOST_URL'] || 'localhost:7233';
+  console.log('connecting to');
+  console.log(address);
 
-  const connection = await Connection.connect();
+  if (process.env['MTLS']){
+    console.log('MTLS is set, connecting to cloud with client certificates');
+    if (process.env['TEMPORAL_TLS_CERT'] && process.env['TEMPORAL_TLS_KEY']) {
+      const cert = await fs.readFile(process.env['TEMPORAL_TLS_CERT']);
+      const key = await fs.readFile(process.env['TEMPORAL_TLS_KEY']);
+
+      connectionOptions = {
+        address: address,
+        tls: {
+          clientCertPair: {
+            crt: cert,
+            key: key,
+          },
+        },
+      }
+    } else {
+      throw new Error("Client Certificate details are required to connect to Cloud with MTLS");
+    }
+    
+  } else {
+    console.log('MTLS is not set, connecting to localhost');
+    connectionOptions = {
+      address: address, 
+      }
+    }
+
+  const connection = await Connection.connect(connectionOptions);
+
   let query = "";
   if (!approveOnly)
     query = 'WorkflowType = "transfer" ';
@@ -21,7 +54,7 @@ export async function listMoneyTransfers(approveOnly: boolean):Promise<PaymentDe
 
   const response = await connection.workflowService.listWorkflowExecutions({
     query: query,
-    namespace: 'default'
+    namespace: namespaceName,
   });
 
   let wkfarray: PaymentDesc[] = [];

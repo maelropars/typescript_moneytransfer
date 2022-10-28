@@ -21,18 +21,23 @@
     ]
   },
   "dependencies": {
+    "@ronomon/crypto-async": "^5.0.1",
     "@temporalio/activity": "^1.4.3",
     "@temporalio/client": "^1.4.3",
+    "@temporalio/common": "^1.4.3",
     "@temporalio/worker": "^1.4.3",
     "@temporalio/workflow": "^1.4.3",
+    "@types/fs-extra": "^9.0.13",
     "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.8",
+    "fs-extra": "^10.1.0",
     "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.0",
     "@types/express": "^4.17.14",
+    "@types/ronomon__crypto-async": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "body-parser": "^1.20.1",

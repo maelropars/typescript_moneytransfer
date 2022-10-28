@@ -2,13 +2,28 @@
 
 This is a typescript adaption of the moneytransfer example from the Temporal Java SDK
 
-### Running this sample
+### Running this sample locally
 
 1. Make sure Temporal Server is running locally (see the [quick install guide](https://docs.temporal.io/docs/server/quick-install/)).
 1. `npm install` to install dependencies.
 1. `npm run start.watch` to start the Worker.
 1. In another shell, `npm run webclient` to run the web application.
 1. Using the webapp, you can create new payments, payments over 1000 euros require an approval. Use the app to approve before expiration.
+1. Use encryption by setting ENCRYPT_PAYLOAD to true
+
+### Running this sample with Temporal Cloud
+
+1. Set the following ENV Variables
+    - TEMPORAL_NAMESPACE with the name of your Cloud namespace
+    - TEMPORAL_HOST_URL with the URL of your Cloud namespace
+    - MTLS must be set to true
+    - TEMPORAL_TLS_CERT path to your client cert file
+    - TEMPORAL_TLS_KEY path to your client cert key file
+1. `npm install` to install dependencies.
+1. `npm run start.watch` to start the Worker.
+1. In another shell, `npm run webclient` to run the web application.
+1. Using the webapp, you can create new payments, payments over 1000 euros require an approval. Use the app to approve before expiration.
+1. Use encryption by setting ENCRYPT_PAYLOAD to true
 
 DEMO SCENARIO
 
