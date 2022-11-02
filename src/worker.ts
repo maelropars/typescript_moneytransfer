@@ -12,11 +12,14 @@ async function run() {
   console.log('connecting to');
   console.log(address);
 
-  if (process.env['MTLS'] || process.env['MTLS'] == 'false'){
+  if (process.env['MTLS'] == 'false'){
+    console.log('MTLS is not set, connecting to localhost');
+    connectionOptions = {
+      address: address, 
+    } 
+  } else {
     console.log('MTLS is set, connecting to cloud with client certificates');
     if (process.env['TEMPORAL_TLS_CERT'] && process.env['TEMPORAL_TLS_KEY']) {
-      console.log('loading certs');
-    
       const cert = await fs.readFile(process.env['TEMPORAL_TLS_CERT']);
       const key = await fs.readFile(process.env['TEMPORAL_TLS_KEY']);
 
@@ -31,14 +34,8 @@ async function run() {
       }
     } else {
       throw new Error("Client Certificate details are required to connect to Cloud with MTLS");
-    }
-    
-  } else {
-    console.log('MTLS is not set, connecting to localhost');
-    connectionOptions = {
-      address: address, 
-      }
-    }
+    }   
+  }
 
     let dataConverter;
 
