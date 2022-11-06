@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moneytransfer-web
+  labels:
+    app: moneytransfer-web
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8081
+  selector:
+    app: moneytransfer-web
+---      
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moneytransfer-web
+  labels:
+    app: moneytransfer-web
+spec:
+  selector:
+    matchLabels:
+      app: moneytransfer-web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: moneytransfer-web
+    spec:
+      containers:
+      - env:
+        - name: TEMPORAL_HOST_URL
+          value: moneytransfer.sdvdw.tmprl.cloud:7233
+        - name: TEMPORAL_NAMESPACE
+          value: moneytransfer.sdvdw
+        - name: TEMPORAL_TLS_CERT
+          value: /etc/certs/tls.crt
+        - name: TEMPORAL_TLS_KEY
+          value: /etc/certs/tls.key
+        name: moneytransfer-web
+        image: ktenzer/moneytransfer-web:v1.0
+        ports:
+        - containerPort: 8081
+        volumeMounts:
+        - mountPath: /etc/certs
+          name: certs
+      volumes:
+      - name: certs
+        secret:
+          defaultMode: 420
+          secretName: moneytransfer-tls
+

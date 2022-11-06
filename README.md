@@ -2,6 +2,16 @@
 
 This is a typescript adaption of the moneytransfer example from the Temporal Java SDK
 
+### Create Custom Search Attributes
+The money transfer app requires the following search attributes:
+- CustomBoolField
+- CustomDateTimeField
+- CustomIntField
+- CustomStringField
+
+These can be added by using tctl (local Temporal) or via tcld or the UI (cloud Temporal).
+![Custom Search Attributes](images/searchattributes.png)
+
 ### Running this sample locally
 
 1. Make sure Temporal Server is running locally (see the [quick install guide](https://docs.temporal.io/docs/server/quick-install/)).
