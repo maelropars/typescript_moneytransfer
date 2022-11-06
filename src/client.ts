@@ -24,6 +24,7 @@ export async function executeMoneyTransfer(fromAccountId: string, toAccountId: s
     args: [fromAccountId, toAccountId, transactionID, amountCents],
     taskQueue: 'moneytransfer-typescript',
     workflowId: transactionID,
+    workflowExecutionTimeout: '10 s',
     searchAttributes: {
       CustomStringField: ['PROCESSING'],
       CustomBoolField: [false],
@@ -40,10 +41,9 @@ export async function approveMoneyTransfer(paymentId: string) {
   let namespaceName = process.env['TEMPORAL_NAMESPACE'] || 'default';
   let dataConverter;
 
-  if (process.env['ENCRYPT_PAYLOAD']) {
-    dataConverter = await getDataConverter();
-  }
-
+if (process.env['ENCRYPT_PAYLOAD']){
+  dataConverter = await getDataConverter();
+}
   const connection = await getConnection();
 
   const client = new WorkflowClient({
