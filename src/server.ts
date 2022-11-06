@@ -1,5 +1,5 @@
 import { executeMoneyTransfer, approveMoneyTransfer } from './client';
-import { listMoneyTransfers } from './clientAdmin';
+import { listMoneyTransfers, getTemporalUILink } from './clientAdmin';
 import express from 'express';
 import { Request } from 'express';
 import { nanoid } from 'nanoid';
@@ -15,6 +15,7 @@ type ApproveParams = {
 };
 
 var app = express();
+var temporalUILink = getTemporalUILink();
 
 app.use(express.static('public'));
 app.set('view engine', 'html');
@@ -23,18 +24,18 @@ app.engine('html', require('ejs').renderFile);
 app.get('/',  (req, res) => {
 
    listMoneyTransfers(false).then(result => {
-      res.render( __dirname + "/" + "index.html", {payments:result});
+      res.render( __dirname + "/" + "index.html", {payments:result, temporalUrl:temporalUILink});
    });
 })
 
 app.get('/newPayment.html',  (req, res) => {
-   res.sendFile( __dirname + "/" + "newPayment.html" );
+   res.render( __dirname + "/" + "newPayment.html", {temporalUrl:temporalUILink} );
 })
 
 app.get('/approval.html',  (req, res) => {
    listMoneyTransfers(true).then(result => {
       //console.log(result);
-      res.render( __dirname + "/" + "approval.html", {payments:result});
+      res.render( __dirname + "/" + "approval.html", {payments:result, temporalUrl:temporalUILink});
    });
 })
 

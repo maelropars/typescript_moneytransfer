@@ -26,6 +26,7 @@ These can be added by using tctl (local Temporal) or via tcld or the UI (cloud T
 1. Set the following ENV Variables
     - TEMPORAL_NAMESPACE with the name of your Cloud namespace
     - TEMPORAL_HOST_URL with the URL of your Cloud namespace
+    - TEMPORAL_UI with the URL of the Temporal UI
     - MTLS must be set to true
     - TEMPORAL_TLS_CERT path to your client cert file
     - TEMPORAL_TLS_KEY path to your client cert key file

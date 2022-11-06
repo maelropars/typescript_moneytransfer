@@ -11,6 +11,10 @@ export interface PaymentDesc {
   needApproval?: boolean;
 }
 
+export function getTemporalUILink():string{
+  return process.env['TEMPORAL_UI'] || 'http://localhost:8080';
+}
+
 export async function getConnection():Promise<Connection> {
   let address = process.env['TEMPORAL_HOST_URL'] || 'localhost:7233';
   let connectionOptions = {};
