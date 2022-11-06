@@ -6,9 +6,10 @@ import fs from "fs-extra";
 export interface PaymentDesc {
   paymentId?: string;
   status?: string;
-  paymentDate?: Date;
+  paymentDate?: string;
   amount?: number;
   needApproval?: boolean;
+  color?: string
 }
 
 export function getTemporalUILink():string{
@@ -76,14 +77,22 @@ export async function listMoneyTransfers(approveOnly: boolean):Promise<PaymentDe
         myPayment.status = converter.fromPayload<string>(element.searchAttributes.indexedFields['CustomStringField']);
       if (element.searchAttributes.indexedFields['CustomBoolField'] != null)
         myPayment.needApproval = converter.fromPayload<boolean>(element.searchAttributes.indexedFields['CustomBoolField']);
-      if (element.searchAttributes.indexedFields['CustomDatetimeField'] != null)
-        myPayment.paymentDate = converter.fromPayload<Date>(element.searchAttributes.indexedFields['CustomDatetimeField']);
+      if (element.searchAttributes.indexedFields['CustomDatetimeField'] != null) {
+        var ldate:Date = converter.fromPayload<Date>(element.searchAttributes.indexedFields['CustomDatetimeField']);
+        myPayment.paymentDate = ldate.toLocaleString();
+      }
       if (element.searchAttributes.indexedFields['CustomIntField'] != null)
         myPayment.amount = converter.fromPayload<number>(element.searchAttributes.indexedFields['CustomIntField']);
     }
 
     if (typeof element.execution?.workflowId === 'string' )
       myPayment.paymentId = element.execution?.workflowId;
+    
+    if (myPayment.status == "SUCCESS")
+          myPayment.color = "green";
+    if (myPayment.status == "REJECTED")
+          myPayment.color = "red";
+
     wkfarray.push(myPayment);
   });
 

@@ -106,9 +106,9 @@
                   <thead class="svelte-p1atkf">
                      <tr>
                         <th></th>
-                        <th class="hidden md:table-cell md:w-60 xl:w-auto">Date</th>
+                        <th class="hidden w-48 md:table-cell">Date</th>
                         <th class="hidden w-48 md:table-cell">Payment ID</th>
-                        <th class="hidden md:table-cell md:w-60 xl:w-auto">Amount</th>
+                        <th class="hidden w-48 md:table-cell">Amount</th>
                         <th class="hidden w-48 md:table-cell">Status</th>
                         <th></th>
                      </tr>
@@ -126,8 +126,12 @@
                            <td class="relative truncate"><span class="table-link svelte-si1lto">
                                  <%=payments[i].amount %>
                               </span></td>
-                           <td class="relative truncate"><span class="table-link svelte-si1lto">
-                                 <%=payments[i].status %>
+                              
+                           <td class="relative truncate">
+                              <span class="flex text-center text-sm font-medium leading-4">
+
+                              <h6 class="<%=payments[i].color %> z-10 flex rounded-sm px-1 py-1 svelte-1g2fi8t"><span class="whitespace-nowrap"><%=payments[i].status %></span> </h6>
+                                 
                               </span>
                               </span></td>
                            <td></td>

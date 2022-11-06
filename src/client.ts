@@ -24,7 +24,6 @@ export async function executeMoneyTransfer(fromAccountId: string, toAccountId: s
     args: [fromAccountId, toAccountId, transactionID, amountCents],
     taskQueue: 'moneytransfer-typescript',
     workflowId: transactionID,
-    workflowExecutionTimeout: '10 s',
     searchAttributes: {
       CustomStringField: ['PROCESSING'],
       CustomBoolField: [false],
