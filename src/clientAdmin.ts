@@ -11,12 +11,9 @@ export interface PaymentDesc {
   needApproval?: boolean;
 }
 
-export async function listMoneyTransfers(approveOnly: boolean):Promise<PaymentDesc[]> {
-  let connectionOptions = {};
-  let namespaceName = process.env['TEMPORAL_NAMESPACE'] || 'default';
+export async function getConnection():Promise<Connection> {
   let address = process.env['TEMPORAL_HOST_URL'] || 'localhost:7233';
-  console.log('connecting to');
-  console.log(address);
+  let connectionOptions = {};
 
   if (process.env['MTLS'] || process.env['MTLS'] == 'false'){
     console.log('MTLS is set, connecting to cloud with client certificates');
@@ -43,14 +40,21 @@ export async function listMoneyTransfers(approveOnly: boolean):Promise<PaymentDe
       address: address, 
       }
     }
+  
+    const connection = await Connection.connect(connectionOptions);
+  return connection;
+}
 
-  const connection = await Connection.connect(connectionOptions);
+export async function listMoneyTransfers(approveOnly: boolean):Promise<PaymentDesc[]> {
+  let namespaceName = process.env['TEMPORAL_NAMESPACE'] || 'default';
+  
+  const connection = await getConnection();
 
   let query = "";
   if (!approveOnly)
     query = 'WorkflowType = "transfer" ';
   else  
-    query = 'WorkflowType = "transfer" && CustomStringField = "NEED APPROVAL" ';
+    query = 'WorkflowType = "transfer" && CustomStringField = "NEED APPROVAL" && ExecutionStatus="Running"';
 
   const response = await connection.workflowService.listWorkflowExecutions({
     query: query,

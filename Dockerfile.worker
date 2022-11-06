@@ -14,4 +14,4 @@ RUN ls -a
 
 RUN npm install
 
-CMD [ "npm", "run", "start.watch" ]
+CMD [ "npm", "run", "start" ]
