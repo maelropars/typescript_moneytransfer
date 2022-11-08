@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "start": "ts-node src/worker.ts",
     "start.watch": "nodemon -q src/worker.ts",
-    "webclient": "ts-node src/server.ts"
+    "webclient": "ts-node src/server.ts",
+    "codec": "ts-node src/codec-server.ts"
   },
   "nodemonConfig": {
     "execMap": {
@@ -30,14 +31,18 @@
     "@types/fs-extra": "^9.0.13",
     "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "ejs": "^3.1.8",
     "fs-extra": "^10.1.0",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "yargs": "github:yargs/yargs"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.0",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/ronomon__crypto-async": "^2.0.0",
+    "@types/yargs": "^17.0.13",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "body-parser": "^1.20.1",

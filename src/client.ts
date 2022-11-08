@@ -3,6 +3,8 @@ import { Connection, WorkflowClient } from '@temporalio/client';
 import { transfer, confirm } from './workflows';
 import { getDataConverter } from './data-converter';
 import { getConnection } from './clientAdmin';
+import { watchFile } from 'fs-extra';
+import * as wf from '@temporalio/workflow';
 
 export async function executeMoneyTransfer(fromAccountId: string, toAccountId: string, transactionID: string, amountCents: number) {
   let namespaceName = process.env['TEMPORAL_NAMESPACE'] || 'default';
@@ -52,10 +54,16 @@ if (process.env['ENCRYPT_PAYLOAD']){
   });
 
   let workflowId = paymentId;
-
   const handle = await client.getHandle(workflowId);
-  handle.signal(confirm, true);
-  console.log(`CLIENT : Confirmed transaction ${workflowId}`);
 
+  try {
+    await handle.signal(confirm, true);
+  } catch (error) {
+    if (error) {
+      console.log(`CLIENT : Workflow already closed, cannot approve ${workflowId}`);
+    } else{
+      console.log(`CLIENT : Confirmed transaction ${workflowId}`);
+    }
+  }
 }
 // @@@SNIPEND
